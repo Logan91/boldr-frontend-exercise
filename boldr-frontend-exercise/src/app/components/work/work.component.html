@@ -1,0 +1,39 @@
+<h6>Works</h6>
+
+<br>
+<div class="search-hero">
+    <input type="text" name="search" [(ngModel)]="searchText" placeholder="Search...">
+</div>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Member</th>
+            <th scope="col">Type</th>
+            <th scope="col">Publisher</th>
+            <th scope="col">Author</th>
+            <th scope="col">Subject</th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let work of works.message.items  | filter:searchText 
+                    | paginate
+                        : {
+                            itemsPerPage: pageSize,
+                            currentPage: page,
+                            totalItems: collectionSize
+                        }">
+        <tr>
+            <td scope="row">{{work.member}}</td>
+            <td scope="row">{{work.type}}</td>
+            <td scope="row">{{work.publisher}}</td>
+            <td scope="row"><span *ngFor="let author of work.author">
+                {{author.family}}, {{author.given}} | 
+            </span></td>
+            <td scope="row">{{work.subject}}</td>
+        </tr>
+    </tbody>
+
+    <div class="d-flex justify-content-center">
+        <pagination-controls (pageChange)="renderPage($event)"></pagination-controls>
+    </div>
+</table>
+
